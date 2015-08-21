@@ -1,0 +1,22 @@
+{
+  "name": "curriculum_vitae",
+  "version": "1.0.0",
+  "description": "REST Server for CurriculumVitae App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blindwalker/curriculumVitae-NodeServer.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Martin Kropf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blindwalker/curriculumVitae-NodeServer/issues"
+  },
+  "homepage": "https://github.com/blindwalker/curriculumVitae-NodeServer#readme"
+}
