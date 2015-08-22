@@ -4,8 +4,8 @@
   "description": "REST Server for CurriculumVitae App",
   "main": "/server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "start": "node /server/server.js"
+  }
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blindwalker/curriculumVitae-NodeServer.git"
@@ -24,5 +24,8 @@
     "express": "^4.13.3",
     "jwt-simple": "^0.3.0",
     "morgan": "^1.6.1"
+  },
+   "engines": {
+    "node": "0.12.7"
   }
 }
