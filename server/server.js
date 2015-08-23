@@ -2,12 +2,26 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
- 
+var connect = require('connect');
 var app = express();
  
 app.use(logger('dev'));
 app.use(bodyParser.json());
  
+// Retrieve
+var mongo = require('mongodb');
+
+var mongoUri = process.env.MONGOLAB_URI;
+mongo.connect(mongoUri, {}, function(error, db){
+
+  // console.log will write to the heroku log which can be accessed via the 
+  // command line as "heroku logs"
+  db.addListener("error", function(error){
+    console.log("Error connecting to MongoLab");
+  });
+
+})
+
 app.all('/*', function(req, res, next) {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
