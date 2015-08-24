@@ -1,24 +1,9 @@
  
 // Retrieve
-var mongo = require('mongodb').MongoClient;
-
-var mongoUri = process.env.MONGOLAB_URI || "localhost";
-
 var products = {
  
   getAll: function(req, res) {
     var allProducts = data; // Spoof a DB call
-
-    mongo.connect(mongoUri, function (err, db) {
-      if (err) {
-          throw err;
-      } else {
-          console.log("successfully connected to the database");
-          res.json(allProducts);
-
-      }
-      db.close();
-  });
     res.json(allProducts);
   },
  
@@ -50,7 +35,7 @@ var products = {
  
 var data = [{
   name: 'product 1',
-  id: 'connected to db'
+  id: '1'
 }, {
   name: 'product 2',
   id: '2'

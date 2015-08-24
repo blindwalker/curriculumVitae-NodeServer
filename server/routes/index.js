@@ -5,16 +5,13 @@ var auth = require('./auth.js');
 var products = require('./products.js');
 var user = require('./users.js');
  
-
-/*
- * Routes that can be accessed by any one
- */
 /*
  * Routes that can be accessed by any one
  */
 router.get('/', products.getAll);
 router.post('/login', auth.login);
- 
+router.post('/login2', auth.login2);
+
 /*
  * Routes that can be accessed only by autheticated users
  */

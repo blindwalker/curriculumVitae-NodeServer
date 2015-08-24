@@ -24,7 +24,7 @@
     "connect": "^3.4.0",
     "express": "^4.13.3",
     "jwt-simple": "^0.3.0",
-    "mongodb": "^2.0.42",
+    "mongoskin": "^0.6.1",
     "morgan": "^1.6.1"
   },
   "engines": {

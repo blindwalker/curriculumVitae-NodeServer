@@ -3,11 +3,22 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var app = express();
- 
+var mongoskin = require('mongoskin');
+
+var mongoUri = process.env.MONGOLAB_URI || "localhost";
+var db = mongoskin.db("mongodb://martinkropf:26d4-j27@ds055812.mongolab.com:55812/curriculumvitae", {safe:true});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+  req.db = {};
+  req.db.users = db.collection('users');
+  next();
+})
+
 app.all('/*', function(req, res, next) {
+  
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
