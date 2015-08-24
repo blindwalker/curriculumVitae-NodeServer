@@ -12,7 +12,7 @@ var auth = {
  
     var username = req.body.username || '';
  
-    req.db.users.find({username: "martinkropf"}).toArray(function(error, user){
+    req.db.users.findOne({username: "martinkropf"}, function(error, user){
         if (error) return next(error);
         res.json(user);
 
