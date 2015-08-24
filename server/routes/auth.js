@@ -10,15 +10,9 @@ var auth = {
  
   login: function(req, res) {
  
-    var username = req.body.username || '';
- 
-    req.db.users.findOne({username: "martinkropf"}, function(error, user){
-        if (error) return next(error);
-        res.json(user);
+    var mUsername = req.body.username || '';
 
-      });
-
-    if (username == '') {
+    if (mUsername == '') {
       res.status(401);
       res.json({
         "status": 401,
@@ -28,24 +22,7 @@ var auth = {
     }
  
     // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = auth.validateUser(req.db, username);
-   
-    if (!dbUserObj) { // If authentication fails, we send a 401 back
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
-      });
-      return;
-    }
- 
-    if (dbUserObj) {
- 
-      // If authentication is success, we will generate a token
-      // and dispatch it to the client
- 
-      //res.json(genToken(dbUserObj));
-    }
+    auth.validateUser(req.db.users, res, mUsername);
  
   },
 
@@ -96,28 +73,29 @@ var auth = {
     return dbUserObj;
   },
  
-  validateUser: function(db, enteredUsername) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
+  validateUser: function(db, res, enteredUsername) {
 
-/*
-    mongo.connect(mongoUri, function (err, db) {
-      if (err) {
-          throw err;
-      } else {
-          console.log("successfully connected to the database");
-          res.json(allProducts);
+    db.findOne({username: enteredUsername}, function(error, user){
+        if (error) return next(error);
+        if (user){
+          var dbUserObj = { // spoofing a userobject from the DB. 
+            firstname: user.firstname,
+            img: user.img,
+            username: user.username
+          };
+        } else {
+          res.status(401);
+          res.json({
+            "status": 401,
+            "message": "Invalid credentials"
+          });
+        }
+     
+        if (dbUserObj) {
+          res.json(dbUserObj);
+        }
 
-      }
-      db.close();
-    });
-*/
- 
-    return dbUserObj;
+      });
   },
 }
  
