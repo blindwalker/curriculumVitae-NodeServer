@@ -26,12 +26,12 @@ var auth = {
  
   },
 
-    login2: function(req, res) {  
+  login2: function(req, res) {
  
-    var username = req.body.username || '';
-    var password = req.body.password || '';
- 
-    if (username == '' || password == '') {
+    var mUsername = req.body.username || '';
+    var mPassword = req.body.password || '';
+
+    if (mUsername == '' || mPassword == '') {
       res.status(401);
       res.json({
         "status": 401,
@@ -41,36 +41,36 @@ var auth = {
     }
  
     // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = auth.validate(username, password);
-   
-    if (!dbUserObj) { // If authentication fails, we send a 401 back
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
-      });
-      return;
-    }
- 
-    if (dbUserObj) {
- 
-      // If authentication is success, we will generate a token
-      // and dispatch it to the client
- 
-      res.json(genToken(dbUserObj));
-    }
+    auth.validate(req.db.users, res, mUsername, mPassword);
  
   },
  
-  validate: function(username, password) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
- 
-    return dbUserObj;
+  validate: function(db, res, username, password) {
+
+    db.findOne({username: username, pwd: password}, function(error, user){
+        if (error) return next(error);
+        if (user){
+
+console.log(user.pwd);
+
+          var dbUserObj = { // spoofing a userobject from the DB. 
+            firstname: user.firstname,
+            img: user.img,
+            username: user.username
+          };
+        } else {
+          res.status(401);
+          res.json({
+            "status": 401,
+            "message": "Invalid credentials"
+          });
+        }
+     
+        if (dbUserObj) {
+          res.json(genToken(dbUserObj));
+        }
+
+      });
   },
  
   validateUser: function(db, res, enteredUsername) {
