@@ -13,11 +13,8 @@ var auth = {
     var mUsername = req.body.username || '';
 
     if (mUsername == '') {
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
-      });
+      res.status(401).send('Invalid credentials');
+
       return;
     }
  
@@ -32,11 +29,7 @@ var auth = {
     var mPassword = req.body.password || '';
 
     if (mUsername == '' || mPassword == '') {
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
-      });
+      res.status(401).send('Invalid credentials');
       return;
     }
  
@@ -59,11 +52,8 @@ console.log(user.pwd);
             username: user.username
           };
         } else {
-          res.status(401);
-          res.json({
-            "status": 401,
-            "message": "Invalid credentials"
-          });
+          res.status(401).send('Invalid credentials');
+
         }
      
         if (dbUserObj) {
@@ -84,11 +74,9 @@ console.log(user.pwd);
             username: user.username
           };
         } else {
-          res.status(401);
-          res.json({
-            "status": 401,
-            "message": "Invalid credentials"
-          });
+          res.status(401).send('Invalid credentials');
+
+
         }
      
         if (dbUserObj) {
