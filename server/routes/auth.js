@@ -1,10 +1,4 @@
 var jwt = require('jwt-simple');
- 
-/*
-var mongo = require('mongodb').MongoClient;
-
-var mongoUri = process.env.MONGOLAB_URI || "localhost";
-*/
 
 var auth = {
  
@@ -18,7 +12,7 @@ var auth = {
       return;
     }
  
-    // Fire a query to your DB and check if the credentials are valid
+    // Fire a query to your DB and check if the username is valid
     auth.validateUser(req.db.users, res, mUsername);
  
   },
@@ -42,11 +36,9 @@ var auth = {
 
     db.findOne({username: username, pwd: password}, function(error, user){
         if (error) return next(error);
+
         if (user){
-
-console.log(user.pwd);
-
-          var dbUserObj = { // spoofing a userobject from the DB. 
+          var dbUserObj = {
             firstname: user.firstname,
             img: user.img,
             username: user.username
@@ -68,7 +60,7 @@ console.log(user.pwd);
     db.findOne({username: enteredUsername}, function(error, user){
         if (error) return next(error);
         if (user){
-          var dbUserObj = { // spoofing a userobject from the DB. 
+          var dbUserObj = { 
             firstname: user.firstname,
             img: user.img,
             username: user.username
@@ -87,7 +79,7 @@ console.log(user.pwd);
   },
 }
  
-// private method
+// generate user token
 function genToken(user) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({

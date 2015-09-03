@@ -5,8 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var mongoskin = require('mongoskin');
 
-var mongoUri = process.env.MONGOLAB_URI || "localhost";
-var db = mongoskin.db("mongodb://martinkropf:26d4-j27@ds055812.mongolab.com:55812/curriculumvitae", {safe:true});
+var db = mongoskin.db(process.env.PROD_MONGODB, {safe:true});
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
